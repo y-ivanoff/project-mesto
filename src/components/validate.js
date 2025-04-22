@@ -38,7 +38,6 @@ export const enableValidation = (validationConfig) => {
     toggleButtonState(inputList, buttonElement);
   }
 
-// Функция получает форму и инпут-элемент, проверяет его на валидность
 function isValid(formElement, inputElement, validationConfig) {
     if (!inputElement.validity.valid) {
         let errorMessage = '';
@@ -58,8 +57,8 @@ function isValid(formElement, inputElement, validationConfig) {
   }
 // Стилизация невалидного поля
 function showInputError(formElement, inputElement, errorMessage, validationConfig) {
-    const errorElement = formElement.querySelector(`[name="${inputElement.name}-error"]`); // выбираем span ошибки для своего инпута
-    inputElement.classList.add(`${validationConfig.inputErrorClass}`); // подсвечивает сам инпут
+    const errorElement = formElement.querySelector(`[name="${inputElement.name}-error"]`); 
+    inputElement.classList.add(`${validationConfig.inputErrorClass}`); 
     errorElement.textContent = errorMessage;
     errorElement.classList.add(`${validationConfig.errorClass}`);
   }
@@ -67,7 +66,7 @@ function showInputError(formElement, inputElement, errorMessage, validationConfi
   // Снятие стилей невалидного поля
   function hideInputError(formElement, inputElement, validationConfig) {
     const errorElement = formElement.querySelector(`[name="${inputElement.name}-error"]`);
-    inputElement.classList.remove(`${validationConfig.inputErrorClass}`); // убираем подсветку с инпута
+    inputElement.classList.remove(`${validationConfig.inputErrorClass}`);
     errorElement.textContent = '';
     errorElement.classList.remove(`${validationConfig.errorClass}`);
   }
