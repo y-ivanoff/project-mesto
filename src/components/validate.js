@@ -72,7 +72,7 @@ function showInputError(formElement, inputElement, errorMessage, validationConfi
   }
 // Блокировка кнопки
 export function toggleButtonState(inputList, button) {
-    if (InvalidInput(inputList)) {
+    if (invalidInput(inputList)) {
       button.disabled = true;
       button.classList.add('popup__button_disabled');
     } else {
@@ -81,7 +81,7 @@ export function toggleButtonState(inputList, button) {
     }
   }
 
-function InvalidInput(inputList) {
+function invalidInput(inputList) {
     return inputList.some((inputElement) => {
       return !inputElement.validity.valid
     })
