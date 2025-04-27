@@ -7,7 +7,7 @@ import { createCard, showCard } from './card.js';
 //Импорт функций из modal
 import { openModal, closeModal } from './modal.js';
 
-import { enableValidation, removeValidation, toggleButtonState } from './validate.js';
+import { enableValidation, removeValidation, toggleButtonState, isValidUrl } from './validate.js';
 
 // DOM узлы
 // Пользователь
@@ -33,6 +33,8 @@ const avatarLinkInput = editProfilePopup.querySelector('.popup__input_type_url')
 
 let userInfo
 
+const preloader = document.querySelector('.preloader');
+
 const nameInput = profilePopup.querySelector('.popup__input_type_name');
 const descriptionInput = profilePopup.querySelector('.popup__input_type_description');
 const imagePopup = document.querySelector('.popup_type_image');
@@ -54,10 +56,12 @@ function renderUserInfo(userData){
 }
 // Начальная загрузка 
 Promise.all([getCards(), getUser()]) 
-  .then(([cardsInfo, userInfo]) => {   
+  .then(([cardsInfo, userInfo]) => {
+       
     renderUserInfo(userInfo)
     cardsInfo.reverse().forEach(card => {
       showCard(createCard(card, userInfo))
+      preloader.classList.add('preloader_hidden');
     });
   })
   .catch((err) => {
@@ -97,7 +101,7 @@ export const validationConfig = {
   formSelector: ".popup__form",
   inputSelector: '.popup__input',
   submitButtonSelector: '.popup__button',
-  inactiveButtonClass: '.popup__button_disabled',
+  inactiveButtonClass: 'popup__button_disabled',
   inputErrorClass: '.popup__input_invalid',
   errorClass: 'popup__error_visible'
 }

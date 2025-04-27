@@ -18,3 +18,5 @@
 @import url('../blocks/card/__like-counter/card__like-counter.css');
 @import url('../blocks/card/__like-container/card__like-container.css');
 @import url('../blocks/profile/__avatar-button/profile__avatar-button.css');
+@import url('../blocks/preloader/preloader.css');
+@import url('../blocks/preloader/preloader__spinner/preloader__spinner.css');

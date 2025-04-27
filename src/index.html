@@ -8,6 +8,9 @@
   <title>Mesto</title>
 </head>
 <body class="page">
+  <div class="preloader">
+    <div class="preloader__spinner"></div>
+  </div>
 <div class="page__content">
   <header class="header page__section">
     <img src="./images/logo.svg" alt="Логотип" class="logo header__logo">
@@ -61,7 +64,7 @@
           <span class="popup__error" name="place-name-error"></span>
         </div>
         <div class="popup__input-container">
-          <input type="url" name="link" class="popup__input popup__input_type_url" placeholder="Ссылка на картинку" required>
+          <input type="url" name="link" class="popup__input popup__input_type_url" placeholder="Ссылка на картинку" required pattern="https?://.+(\.(jpg|jpeg|png|bmp|webp))($|\?)">
           <span class="popup__error" name="link-error"></span>
         </div>
         <button type="submit" class="button popup__button popup__button_disabled">Сохранить</button>
@@ -74,7 +77,7 @@
       <h3 class="popup__title">Обновить аватар</h3>
       <form class="popup__form" name="update-profile" novalidate>
         <div class="popup__input-container">
-          <input type="url" name="link" class="popup__input popup__input_type_url" placeholder="Ссылка на картинку" required>
+          <input type="url" name="link" class="popup__input popup__input_type_url" placeholder="Ссылка на картинку" required pattern="https?://.+(\.(jpg|jpeg|png|bmp|webp))($|\?)">
           <span class="popup__error" name="link-error"></span>
         </div>
         <button type="submit" class="button popup__button popup__button_disabled">Сохранить</button>

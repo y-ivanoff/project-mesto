@@ -12,7 +12,8 @@ export const enableValidation = (validationConfig) => {
     const forms = Array.from(document.querySelectorAll(validationConfig.formSelector));
     forms.forEach((formElement) => {
       const inputList = Array.from(formElement.querySelectorAll(validationConfig.inputSelector));
-      const errorElements = formElement.querySelectorAll(`.${validationConfig.errorClass}`);
+      const errorElements = formElement.querySelectorAll(`.${validationConfig.errorClass}`)
+      const buttonElement = formElement.querySelector(validationConfig.submitButtonSelector);
       // Убираем класс ошибки у всех инпутов
       inputList.forEach((inputElement) => {
         inputElement.classList.remove(validationConfig.inputErrorClass);
@@ -23,19 +24,21 @@ export const enableValidation = (validationConfig) => {
         errorElement.textContent = '';
         errorElement.classList.remove(validationConfig.errorClass);
       });
+      buttonElement.disabled = true;
+      buttonElement.classList.add('popup__button_disabled');
     });
   };
 
   function setEventListeners(formElement, validationConfig) {
     const inputList = Array.from(formElement.querySelectorAll(`${validationConfig.inputSelector}`))
     const buttonElement = formElement.querySelector(`${validationConfig.submitButtonSelector}`);
+    toggleButtonState(inputList, buttonElement);
     inputList.forEach((inputElement) => {
       inputElement.addEventListener('input', function () {
         isValid(formElement, inputElement, validationConfig);
         toggleButtonState(inputList, buttonElement);
       })
     })
-    toggleButtonState(inputList, buttonElement);
   }
 
 function isValid(formElement, inputElement, validationConfig) {
@@ -44,14 +47,16 @@ function isValid(formElement, inputElement, validationConfig) {
         
         if (inputElement.validity.valueMissing) {
           errorMessage = 'Вы пропустили это поле.';
-        } else if (inputElement.validity.typeMismatch) {
-          errorMessage = 'Введите адрес сайта.';
-        } else if (inputElement.validity.tooShort) {
+        } 
+        else if (inputElement.validity.tooShort) {
           const currentLength = inputElement.value.length;
           errorMessage = `Минимальное количество символов: ${inputElement.minLength}. Длина текста сейчас: ${currentLength} символ${currentLength === 1 ? '' : 'а'}.`;
+        } else if (inputElement.validity.typeMismatch || inputElement.validity.patternMismatch) {
+          errorMessage = 'Введите корректный URL (должен заканчиваться на .jpg, .jpeg, .png)';
         }
         showInputError(formElement, inputElement, errorMessage, validationConfig)
-      } else {
+      } 
+      else {
         hideInputError(formElement, inputElement, validationConfig)
       }
   }
@@ -83,7 +88,16 @@ export function toggleButtonState(inputList, button) {
 
 function invalidInput(inputList) {
     return inputList.some((inputElement) => {
-      return !inputElement.validity.valid
+      return !inputElement.validity.valid;
     })
   }
-  
+
+  export function isValidUrl(url) {
+    try {
+      const parsedUrl = new URL(url);
+      return parsedUrl.protocol === 'http:' || parsedUrl.protocol === 'https:';
+    } catch (e) {
+      return false;
+    }
+  }
+
